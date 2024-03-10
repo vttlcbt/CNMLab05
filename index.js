@@ -128,8 +128,11 @@ app.post("/delete", upload.fields([]), (req, res) => {
         if (err) {
           console.error("error=", err)
           return res.send("Interal Server Error!")
-        } else if (length > 0) onDeleteItem(length - 1)
-        else return res.redirect("/")
+        } else if (length > 0) {
+          onDeleteItem(length - 1) // Nếu còn phần tử trong mảng thì gọi lại hàm đệ quy
+        } else {
+          return res.redirect("/") // Nếu không còn phần tử nào trong mảng thì render lại trang index
+        }
       })
     }
     onDeleteItem(listCheckboxSelected.length - 1) // Gọi hàm đệ quy xóa
